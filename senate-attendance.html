@@ -9,62 +9,57 @@
 </head>
     
     <body>
-        <nav>
-            <div>
-            
-            <header>
-              <div class="row align-items-center">
-                  <div class="col-2">
-                   <img class="img-fluid" src="Logo.png" alt="logo">
-               </div>
-                <div class="col-10">
+    <div class="container">
+ <header>
+            <div class="row align-items-center">
+                <div class="col-9">
+                    <img class="img-fluid" src="Logo.png" alt="logo">
+                </div>
+                <div class="col-1">
+                    <img class="img-fluid" src="email-logo-png-transparent-background-5.png" alt="logo">
+                </div>
+                <div class="col-2">
                     <h4><a href="mailto:info@tgif.net" target="_blank">info@tgif.net</a></h4>
                 </div>
-                
-              </div>
-               
-                
-                
-            </header>
-                
-
-                <ul class="nav nav-tabs border border border-dark">
-                    <li class="nav-item border border-dark">
-                        <a class="nav-link active" href="home.html">Home</a>
-                    </li>
-                    <li class="nav-item dropdown border border-dark">
-                        <a class="nav-link dropdown-toggle border"data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Congress 113</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="senate-data.html">Senate</a>
-                            <a class="dropdown-item" href="house-data.html">House</a>
-                        </div>
-                    </li>
-                      <li class="nav-item dropdown border border-dark">
-                        <a class="nav-link dropdown-toggle border"data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Attendance</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="senate-attendance.html">Senate</a>
-                            <a class="dropdown-item" href="house-data.html">House</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown border border-dark">
-                        <a class="nav-link dropdown-toggle border"data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Party Loyalty</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="senate-data.html">Senate</a>
-                            <a class="dropdown-item" href="house-data.html">House</a>
-                        </div>
-                    </li>
-                </ul>
 
             </div>
-        </nav>             
+
+
+
+        </header>
+        <nav class="navMargin">
+
+            <ul class=" row nav nav-tabs border border border-dark bg-light">
+                <li class="nav-item border border-dark">
+                    <a class="nav-link active" href="home.html">Home</a>
+                </li>
+                <li class="nav-item dropdown border border-dark">
+                    <a class="nav-link dropdown-toggle border" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Congress 113</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="senate-data.html">Senate</a>
+                        <a class="dropdown-item" href="house-data.html">House</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown border border-dark">
+                    <a class="nav-link dropdown-toggle border" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Attendance</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="senate-attendance.html">Senate</a>
+                        <a class="dropdown-item" href="house-attendance.html">House</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown border border-dark">
+                    <a class="nav-link dropdown-toggle border" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Party Loyalty</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="senate-loyalty.html">Senate</a>
+                        <a class="dropdown-item" href="house-loyalty.html">House</a>
+                    </div>
+                </li>
+            </ul>
+
+
+        </nav>            
   
 
-        <header>            
-            <div>
-            	<p>https://www.whitehouse.gov/the_press_office/TransparencyandOpenGovernment</p>
-
-            </div>
-        </header>
         <!--Table container-->
         
              <div>
@@ -86,17 +81,17 @@
                     <tr>
                         <td>Republican</td>
                         <td id="Rep"></td>
-                        <td id="Rep1">%</td>
+                        <td id="Rep1"></td>
                     </tr>
                     <tr>
                         <td>Democrat</td>
                         <td id="Dem"></td>
-                        <td id="Dem1">%</td>
+                        <td id="Dem1"></td>
                     </tr>
                     <tr>
                         <td>Independent</td>
                         <td id="Ind"></td>
-                        <td id="Ind1">%</td>
+                        <td id="Ind1"></td>
                     </tr>
                 </tbody>
             </table>
@@ -202,5 +197,6 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        </div>
 </body>
 </html>
