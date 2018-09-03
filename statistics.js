@@ -6,6 +6,8 @@ let statistics = {
     "votedWithPartyR": 0,
     "votedWithPartyD": 0,
     "votedWithPartyR": 0,
+    "leastEngaged":0,
+    "mostEngaged":0,
 }
 
 let members = data.results[0].members;
@@ -13,6 +15,8 @@ let members = data.results[0].members;
 
 //Function Calls
 calculateStatistics();
+engaged("least");
+engaged("most"); 
 putElements();
 //console.log(statistics);
 
@@ -37,7 +41,7 @@ function calculateStatistics() {
                 break;
         }
 
-    }
+    }// no we calculated the total amount - next we will calculate the votes with party 
 
     var Reps = [];
     var Dems = [];
@@ -49,7 +53,7 @@ function calculateStatistics() {
 
         switch (everyMember.party) {
             case "R":
-                Reps.push(everyMember.votes_with_party_pct);
+                Reps.push(everyMember.votes_with_party_pct); // basically we add all the percentages in an array, we build the sum and divide it by the amount of members 
                 break;
             case "D":
                 Dems.push(everyMember.votes_with_party_pct);
@@ -86,4 +90,61 @@ function putElements() {
     document.getElementById('Dem1').innerHTML = statistics.votedWithPartyD + "%";
     document.getElementById('Ind1').innerHTML = statistics.votedWithPartyI + "%";
 
+     var leastTable = document.getElementById('leastTable');
+   buildSmallTable(statistics.leastEngaged, leastTable);
+
+   var mostTable = document.getElementById("mostTable");
+   buildSmallTable(statistics.mostEngaged, mostTable);
+}
+
+
+
+
+
+
+
+
+
+
+
+function engaged(direction) {
+
+   if(direction == "least"){
+       var sortedArray = members.sort(function (a, b) {
+           return b.missed_votes - a.missed_votes //we sort the members based on how many votes they missed 
+       });
+   } else {
+       var sortedArray = members.sort(function (a, b) {
+           return a.missed_votes - b.missed_votes
+       });
+   }
+
+   // take only 10% from sortedArray
+   var checkedPrecent = sortedArray.length / 10;
+   checkedPrecent = checkedPrecent.toFixed(0);
+   // save in statistics this 10%
+
+   var tenPrcArray = [];
+   for (i = 0; i<checkedPrecent; i++){
+       tenPrcArray.push(members[i]) ;
+   }
+
+   if(direction == "least"){
+       statistics.leastEngaged = tenPrcArray;
+   } else {
+       statistics.mostEngaged = tenPrcArray;
+   }
+}
+
+
+function buildSmallTable(smallArray, whereToPut){
+
+       for(var k=0; k < smallArray.length; k++){
+           var link = "<a href='" + smallArray[k].url + "'>" + smallArray[k].first_name + " " + smallArray[k].last_name + "</a>";
+           var newRow = document.createElement("tr");
+           newRow.insertCell().innerHTML = link;
+           newRow.insertCell().innerHTML = smallArray[k].missed_votes;
+           newRow.insertCell().innerHTML = smallArray[k].missed_votes_pct;
+           whereToPut.append(newRow);
+   }
 }

@@ -10,7 +10,7 @@
     
     <body>
  <div class="container">
- <header>
+     <header>
             <div class="row align-items-center">
                 <div class="col-9">
                     <img class="img-fluid" src="Logo.png" alt="logo">
@@ -23,10 +23,8 @@
                 </div>
 
             </div>
-
-
-
         </header>
+        
         <nav class="navMargin">
 
             <ul class=" row nav nav-tabs border border border-dark bg-light">
@@ -76,25 +74,31 @@
 
 
         <div class="table-responsive">
-                   <table class="table table-borderless">
+            <table class="table table-borderless">
                     <thead class="thead-dark">
-                <tr>
-<!--                    <th class="col my-column-width">Senator</th>
-                    <th class="col">Party Affiliation</th>
-                    <th class="col">State</th>
-                    <th class="col">Seniority</th>
-                    <th class="col">Percentage of votes</th>-->
-                    <th>Senator</th>
-                    <th>Party Affiliation</th>
-                    <th>State</th>
-                    <th>Seniority</th>
-                    <th>Percentage of votes</th>
-                </tr>
-            </thead>
+                        <tr>
+        <!--                    <th class="col my-column-width">Senator</th>
+                            <th class="col">Party Affiliation</th>
+                            <th class="col">State</th>
+                            <th class="col">Seniority</th>
+                            <th class="col">Percentage of votes</th>-->
+                            <th>Senator</th>
+                            <th>Party Affiliation</th>
+                            <th>State</th>
+                            <th>Seniority</th>
+                            <th>Percentage of votes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="putDataHere">
+                    </tbody>
             </table>
-        <table class="table table-borderless" id="putDataHere">
-        </table>
         </div>
+        
+         <footer>
+                <div class="border border-dark bg-light row justify-content-center">
+                    <b>© 2016 TGIF / All Rights Reserved</b>
+                </div>
+            </footer>
 
 
         <script src="congress-113-house.js"></script>
