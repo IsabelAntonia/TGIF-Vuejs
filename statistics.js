@@ -5,18 +5,28 @@ let statistics = {
     "numI": 0,
     "votedWithPartyR": 0,
     "votedWithPartyD": 0,
-    "votedWithPartyR": 0,
-    "leastEngaged":0,
-    "mostEngaged":0,
+    "votedWithPartyI": 0,
+    "leastEngaged": [],
+    "mostEngaged": [],
+    "bestLoyal": [],
+    "worstLoyal": []
+
 }
+
 
 let members = data.results[0].members;
 
-
 //Function Calls
 calculateStatistics();
-engaged("least");
-engaged("most"); 
+
+if (document.title.includes('Attendance')) {
+    engaged("least");
+    engaged("most");
+}
+if (document.title.includes('Loyalty')) {
+    loyal("best");
+    loyal("worst");
+}
 putElements();
 //console.log(statistics);
 
@@ -41,7 +51,7 @@ function calculateStatistics() {
                 break;
         }
 
-    }// no we calculated the total amount - next we will calculate the votes with party 
+    } // no we calculated the total amount - next we will calculate the votes with party 
 
     var Reps = [];
     var Dems = [];
@@ -70,15 +80,22 @@ function calculateStatistics() {
     //    console.log(addElements(Reps)/statistics.numR);
     statistics.votedWithPartyR = Math.round(addElements(Reps) / statistics.numR);
     statistics.votedWithPartyD = Math.round(addElements(Dems) / statistics.numD);
-    statistics.votedWithPartyI = Math.round(addElements(Inds) / statistics.numI);
 
+    if (statistics.numI == 0) {
+        statistics.votedWithPartyI = 0;
+    } else {
+        statistics.votedWithPartyI = Math.round(addElements(Inds) / statistics.numI);
+    }
 }
 
 function addElements(recievedArray) {
+    //    if (recievedArray.length != 0) {
 
     var sum = recievedArray.reduce((total, amount) => total + amount);
     //    console.log(sum);
     return sum;
+    //    } else return 0;
+
 }
 
 function putElements() {
@@ -90,61 +107,110 @@ function putElements() {
     document.getElementById('Dem1').innerHTML = statistics.votedWithPartyD + "%";
     document.getElementById('Ind1').innerHTML = statistics.votedWithPartyI + "%";
 
-     var leastTable = document.getElementById('leastTable');
-   buildSmallTable(statistics.leastEngaged, leastTable);
 
-   var mostTable = document.getElementById("mostTable");
-   buildSmallTable(statistics.mostEngaged, mostTable);
+    //
+    //    var leastTable = document.getElementById('leastTable');
+    //    buildSmallTable(statistics.leastEngaged, leastTable);
+    //
+    //    var mostTable = document.getElementById("mostTable");
+    //    buildSmallTable(statistics.mostEngaged, mostTable);
+    //    
+    //    var worstTable = document.getElementById("worstTable");
+    //    buildSmallTable(statistics.worstLoyal, worstTable);
+    //    
+    //    var bestTable = document.getElementById("bestTable");
+    //    buildSmallTable(statistics.mostLoyal, bestTable); 
+
 }
-
-
-
-
-
-
-
-
-
-
 
 function engaged(direction) {
 
-   if(direction == "least"){
-       var sortedArray = members.sort(function (a, b) {
-           return b.missed_votes - a.missed_votes //we sort the members based on how many votes they missed 
-       });
-   } else {
-       var sortedArray = members.sort(function (a, b) {
-           return a.missed_votes - b.missed_votes
-       });
-   }
+    if (direction == "least") {
+        var sortedArray = members.sort(function (a, b) {
+            return b.missed_votes - a.missed_votes //we sort the members based on how many votes they missed 
+        });
+    } else {
+        var sortedArray = members.sort(function (a, b) {
+            return a.missed_votes - b.missed_votes
+        });
+    }
 
-   // take only 10% from sortedArray
-   var checkedPrecent = sortedArray.length / 10;
-   checkedPrecent = checkedPrecent.toFixed(0);
-   // save in statistics this 10%
+    // take only 10% from sortedArray
+    var checkedPrecent = sortedArray.length / 10;
+    checkedPrecent = checkedPrecent.toFixed(0);
+    // save in statistics this 10%
 
-   var tenPrcArray = [];
-   for (i = 0; i<checkedPrecent; i++){
-       tenPrcArray.push(members[i]) ;
-   }
+    var tenPrcArray = [];
+    for (i = 0; i < checkedPrecent; i++) {
+        tenPrcArray.push(members[i]);
+    }
 
-   if(direction == "least"){
-       statistics.leastEngaged = tenPrcArray;
-   } else {
-       statistics.mostEngaged = tenPrcArray;
-   }
+    if (direction == "least") {
+        statistics.leastEngaged = tenPrcArray;
+        var leastTable = document.getElementById('leastTable');
+        buildSmallTable(statistics.leastEngaged, leastTable);
+    } else {
+        statistics.mostEngaged = tenPrcArray;
+        var mostTable = document.getElementById("mostTable");
+        buildSmallTable(statistics.mostEngaged, mostTable);
+    }
+
+    function buildSmallTable(smallArray, whereToPut) {
+
+        for (var k = 0; k < smallArray.length; k++) {
+            var link = "<a href='" + smallArray[k].url + "'>" + smallArray[k].first_name + " " + smallArray[k].last_name + "</a>";
+            var newRow = document.createElement("tr");
+            newRow.insertCell().innerHTML = link;
+            newRow.insertCell().innerHTML = smallArray[k].missed_votes;
+            newRow.insertCell().innerHTML = smallArray[k].missed_votes_pct + "%";
+            whereToPut.append(newRow);
+
+        }
+    }
 }
 
+function loyal(direction) {
 
-function buildSmallTable(smallArray, whereToPut){
+    if (direction == "worst") {
+        var sortedArray = members.sort(function (a, b) {
+            return a.votes_with_party_pct - b.votes_with_party_pct //we sort the members based on how many votes they missed 
+        });
+    } else {
+        var sortedArray = members.sort(function (a, b) {
+            return b.votes_with_party_pct - a.votes_with_party_pct
+        });
+    }
 
-       for(var k=0; k < smallArray.length; k++){
-           var link = "<a href='" + smallArray[k].url + "'>" + smallArray[k].first_name + " " + smallArray[k].last_name + "</a>";
-           var newRow = document.createElement("tr");
-           newRow.insertCell().innerHTML = link;
-           newRow.insertCell().innerHTML = smallArray[k].missed_votes;
-           newRow.insertCell().innerHTML = smallArray[k].missed_votes_pct;
-           whereToPut.append(newRow);
-   }
-}
+    // take only 10% from sortedArray
+    var checkedPrecent = sortedArray.length / 10;
+    checkedPrecent = checkedPrecent.toFixed(0);
+    // save in statistics this 10%
+
+    var tenPrcArray = [];
+    for (i = 0; i < checkedPrecent; i++) {
+        tenPrcArray.push(members[i]);
+    }
+
+    if (direction == "worst") {
+        statistics.worstLoyal = tenPrcArray;
+        var worstTable = document.getElementById("worstTable");
+        buildSmallTable(statistics.worstLoyal, worstTable);
+    } else {
+        statistics.bestLoyal = tenPrcArray;
+        var bestTable = document.getElementById("bestTable");
+        buildSmallTable(statistics.bestLoyal, bestTable);
+    }
+
+    function buildSmallTable(smallArray, whereToPut) {
+
+        for (var k = 0; k < smallArray.length; k++) {
+            var link = "<a href='" + smallArray[k].url + "'>" + smallArray[k].first_name + " " + smallArray[k].last_name + "</a>";
+            var numberPartyVotes = ((smallArray[k].total_votes - smallArray[k].missed_votes) * smallArray[k].votes_with_party_pct) / 100;
+            var newRow = document.createElement("tr");
+            newRow.insertCell().innerHTML = link;
+            newRow.insertCell().innerHTML = Math.round(numberPartyVotes);
+            newRow.insertCell().innerHTML = smallArray[k].votes_with_party_pct + "%";
+            whereToPut.append(newRow);
+        }
+    }
+    }

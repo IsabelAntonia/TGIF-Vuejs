@@ -183,6 +183,8 @@
 
 // this is an alternative more clean approach 
 
+//fetch
+
 let mySelect = document.getElementById("stateId");
 let allMembers = data.results[0].members;
 
