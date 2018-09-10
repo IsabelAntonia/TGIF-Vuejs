@@ -70,6 +70,26 @@
       
         <div id="vueTest">
         
+         <div v-if="loading" class="loader" style="text-align:center">
+                <div class="lds-default">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+            </div>
+
+            <div v-else>
+        
         Filter by party: 
         <input type="checkbox" name="party" value="R" id="partyR" @click="filter">Republican
         <input type="checkbox" name="party" value="D" id="partyD" @click="filter">Democrat
@@ -111,6 +131,7 @@
 
 
         </div>
+         </div>
 
 
 

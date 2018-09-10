@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,73 +64,61 @@
         <p>Each U.S. state is represented in the House in proportion to its population as measured in the census, but every state is entitled to at least one representative. </p>
 
         <div id="vueTest">
-        
-        Filter by party: 
-        <input type="checkbox" name="party" value="R" id="partyR" @click="filter">Republican
-        <input type="checkbox" name="party" value="D" id="partyD" @click="filter">Democrat
-        <input type="checkbox" name="party" value="I" id="partyI" @click="filter">Independant 
-          
-        Filter by State: <select name="state" id="stateId" @change="filter">
-            <option value="ALL">ALL</option>
-            <option v-for="item in sortedStates">{{item}}</option>
-           
-            
-            
-        </select>
-        
-        <div class="table-responsive">
-            <table class="table table-borderless">
-                <thead class="thead-dark">
-                    <tr>
 
-                        <th>Name</th>
-                        <th>Party Affiliation</th>
-                        <th>State</th>
-                        <th>Seniority</th>
-                        <th>Percentage of votes</th>
-                    </tr>
-                </thead>
+            <div v-if="loading" class="loader" style="text-align:center">
+                <div class="lds-default">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
 
-                <tbody>
-                    <tr v-for="member in members">
-                        <td><a v-bind:href="member.url">{{member.first_name + " " + (member.middle_name || "")+ " " + member.last_name}}</a></td>
-                        <td>{{member.party}}</td>
-                        <td>{{member.state}}</td>
-                        <td>{{member.seniority}}</td>
-                        <td>{{member.votes_with_party_pct}}%</td>
-                    </tr>
-                </tbody>
+            </div>
 
-            </table>
+            <div v-else>
+
+                Filter by party:
+                <input type="checkbox" name="party" value="R" id="partyR" @click="filter">Republican
+                <input type="checkbox" name="party" value="D" id="partyD" @click="filter">Democrat
+                <input type="checkbox" name="party" value="I" id="partyI" @click="filter">Independant Filter by State:
+                <select name="state" id="stateId" @change="filter">
+                    <option value="ALL">ALL</option>
+                    <option v-for="item in sortedStates">{{item}}</option>
+                </select>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Party Affiliation</th>
+                                <th>State</th>
+                                <th>Seniority</th>
+                                <th>Percentage of votes</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr v-for="member in members">
+                                <td><a v-bind:href="member.url">{{member.first_name + " " + (member.middle_name || "")+ " " + member.last_name}}</a></td>
+                                <td>{{member.party}}</td>
+                                <td>{{member.state}}</td>
+                                <td>{{member.seniority}}</td>
+                                <td>{{member.votes_with_party_pct}}%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-
-
-        </div>
-
-        <!--        this is putDataHere-->
-        <!--
-        <div class="table-responsive">
-            <table class="table table-borderless">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th class="col my-column-width">Senator</th>
-                            <th class="col">Party Affiliation</th>
-                            <th class="col">State</th>
-                            <th class="col">Seniority</th>
-                            <th class="col">Percentage of votes</th>
-                            <th>Senator</th>
-                            <th>Party Affiliation</th>
-                            <th>State</th>
-                            <th>Seniority</th>
-                            <th>Percentage of votes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="putDataHere">
-                    </tbody>
-            </table>
-        </div>
--->
-
         <footer>
             <div class="border border-dark bg-light row justify-content-center">
                 <b>© 2016 TGIF / All Rights Reserved</b>
@@ -149,4 +138,5 @@
     </div>
 
 </body>
+
 </html>

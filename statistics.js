@@ -1,4 +1,39 @@
 //Declare Global Vars
+
+
+(function () {
+
+    var url;
+
+    if (document.title.includes("House")) {
+        url = "https://api.propublica.org/congress/v1/113/house/members.json";
+    }
+
+    if (document.title.includes("Senate")) {
+        url = "https://api.propublica.org/congress/v1/113/senate/members.json";
+    }
+
+    fetch(url, {
+            headers: new Headers({
+                'X-API-Key': 'JlFF4jpgMcRs9zuQsaUDjWkjbRE3KL1b3H2cs0Kl '
+            })
+        })
+        .then(response => response.json())
+        .then(realData => {
+
+            
+
+            main(realData);
+        })
+
+    
+
+
+})()
+
+
+function main (data){ 
+
 let statistics = {
     "numR": 0,
     "numD": 0,
@@ -212,5 +247,6 @@ function loyal(direction) {
             newRow.insertCell().innerHTML = smallArray[k].votes_with_party_pct + "%";
             whereToPut.append(newRow);
         }
+    }
     }
     }
