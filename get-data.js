@@ -186,157 +186,76 @@
 //fetch
 
 
-(function () {
 
-    var data;
-    var url;
 
-    if (document.title.includes("House")) {
-        url = "https://api.propublica.org/congress/v1/113/house/members.json";
-    }
 
-    if (document.title.includes("Senate")) {
-        url = "https://api.propublica.org/congress/v1/113/senate/members.json";
-    }
 
-    fetch(url, {
-            headers: new Headers({
-                'X-API-Key': 'JlFF4jpgMcRs9zuQsaUDjWkjbRE3KL1b3H2cs0Kl '
+
+new Vue({
+    el: '#vueTest',
+    data: {
+        allMembers: [],
+        members: [],
+        sortedStates: []
+    },
+
+    beforeCreate() {
+        var data;
+        var url;
+
+        if (document.title.includes("House")) {
+            url = "https://api.propublica.org/congress/v1/113/house/members.json";
+        }
+
+        if (document.title.includes("Senate")) {
+            url = "https://api.propublica.org/congress/v1/113/senate/members.json";
+        }
+
+        fetch(url, {
+                headers: new Headers({
+                    'X-API-Key': 'JlFF4jpgMcRs9zuQsaUDjWkjbRE3KL1b3H2cs0Kl '
+                })
             })
-        })
-        .then(response => response.json())
-        .then(realData => {
+            .then(response => response.json())
+            .then(realData => {
 
-            data = realData;
+                data = realData;
 
-            alternativeFilter();
-        })
+                this.allMembers = data.results[0].members;
+                this.members = data.results[0].members;
 
-
-    function alternativeFilter() {
-
-
-        new Vue({
-            el: '#vueTest',
-            data: {
-                allMembers: data.results[0].members,
-                members: data.results[0].members,
-                sortedStates: []
-            },
-            created(){
                 this.createOptionElements();
-            },
-            methods: {
-                filter() {
-                    
-                    var checkedCheckbox = Array.from(document.querySelectorAll('input[name=party]:checked')).map(arrayElement => arrayElement.value)
-                    this.members = this.allMembers.filter(everyMember => {
+            
+                this.filter();
 
-                        var partyFilter = checkedCheckbox.includes(everyMember.party) || checkedCheckbox.length == 0; // in here we have the test 
+            })
+    },
+    methods: {
+        filter() {
 
-                        var mySelect = document.querySelector("#stateId");
-                        var stateFilter = mySelect.value == everyMember.state || mySelect.value == 'ALL';
+            var checkedCheckbox = Array.from(document.querySelectorAll('input[name=party]:checked')).map(arrayElement => arrayElement.value)
+            this.members = this.allMembers.filter(everyMember => {
 
-                        return partyFilter && stateFilter;
+                var partyFilter = checkedCheckbox.includes(everyMember.party) || checkedCheckbox.length == 0; // in here we have the test 
+
+                var mySelect = document.querySelector("#stateId");
+                var stateFilter = mySelect.value == everyMember.state || mySelect.value == 'ALL';
+
+                return partyFilter && stateFilter;
 
 
-                    });
-                },
-                createOptionElements(){
-                    var stateNames = [];
-        
-                    for (i = 0; i < this.allMembers.length; i++) {
-                        if (!stateNames.includes(this.allMembers[i].state)) {
-                            stateNames.push(this.allMembers[i].state)
-                        }
-                    }
-                    
-                    this.sortedStates = stateNames.sort();
+            });
+        },
+        createOptionElements() {
+            var stateNames = [];
+
+            for (i = 0; i < this.allMembers.length; i++) {
+                if (!stateNames.includes(this.allMembers[i].state)) {
+                    stateNames.push(this.allMembers[i].state)
                 }
             }
-        })
 
-
-
-        //
-        //    var allMembers = data.results[0].members;
-        //    let mySelect = document.getElementById("stateId");
-        //    
-        //    let putDataHere = document.querySelector('#putDataHere');
-        //    
-        //    putDataHere.innerHTML = "";
-        //
-        //    //
-        //    var checkedCheckbox = Array.from(document.querySelectorAll('input[name=party]:checked')).map(arrayElement => arrayElement.value); // so here we store R in the Array we do not actually need the name=party because for now all of our inputs have the name party 
-
-        // whatever gets ckecked input party gets replaced by its value so either R, D, I and gets put into checkedCheckbox
-        //
-        //
-        //    var filteredMembers = allMembers.filter(everyMember => { // the filter method creates an array filled with all array elements that pass a test 
-        //
-        //        var partyFilter = checkedCheckbox.includes(everyMember.party) || checkedCheckbox.length == 0; // in here we have the test 
-        //
-        ////        var mySelect = document.querySelector("#stateId");
-        //        var stateFilter = mySelect.value == everyMember.state || mySelect.value == 'ALL'; 
-        //
-        //        return partyFilter && stateFilter;
-        //
-        //    });
-        //
-        //
-        //    filteredMembers.forEach(member => {
-        //
-        //        var newRow = document.createElement("tr");
-        //
-        //        var names = [member.first_name, member.middle_name, member.last_name]
-        //        var full_name = names.join(" ");
-        //
-        //        var link = "<a href=\"" + member.url + "\">" + full_name + "</a>";
-        //        //            var link = full_name.link(member.url);
-        //
-        //        newRow.insertCell().innerHTML = link;
-        //        newRow.insertCell().innerHTML = member.party;
-        //        newRow.insertCell().innerHTML = member.state;
-        //        newRow.insertCell().innerHTML = member.seniority;
-        //        newRow.insertCell().innerHTML = member.votes_with_party_pct + "%";
-        //        
-        //        document.getElementById("putDataHere").append(newRow);
-        //        
-        //    });
-        //
-        //    let CheckboxR = document.querySelector("#partyR");
-        //    CheckboxR.addEventListener("click", alternativeFilter);
-        //
-        //    let CheckboxD = document.querySelector("#partyD");
-        //    CheckboxD.addEventListener("click", alternativeFilter);
-        //
-        //    let CheckboxI = document.querySelector("#partyI");
-        //    CheckboxI.addEventListener("click", alternativeFilter);
-        //
-        //    mySelect.addEventListener("change",alternativeFilter);
-        //
-/*            function createOptionElements() {
-                var stateNames = []
-        
-                for (i = 0; i < allMembers.length; i++) {
-                    if (!stateNames.includes(allMembers[i].state)) {
-                        stateNames.push(allMembers[i].state)
-                    }
-        
-                }
-                stateNames.sort();
-        
-        
-                for (j = 0; j < stateNames.length; j++) {
-                    var newElement = document.createElement("option")
-                    newElement.innerHTML = stateNames[j]
-        
-                    mySelect.append(newElement);
-                }
-            }*/
-        //    createOptionElements();
+            this.sortedStates = stateNames.sort();
+        }
     }
-    //alternativeFilter();
-
-
-})()
+})

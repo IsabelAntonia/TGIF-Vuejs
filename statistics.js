@@ -166,7 +166,7 @@ function engaged(direction) {
             whereToPut.append(newRow);
 
         }
-    }
+    }   
 }
 
 function loyal(direction) {
