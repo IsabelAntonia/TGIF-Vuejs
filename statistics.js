@@ -1,4 +1,4 @@
-//Declare Global Vars
+
 
 
 (function () {
@@ -6,18 +6,21 @@
     var url;
 
     if (document.title.includes("House")) {
-        url = "https://api.propublica.org/congress/v1/113/house/members.json";
+        url = "https://api.myjson.com/bins/j83do";
+//        "https://api.propublica.org/congress/v1/113/house/members.json";
     }
 
     if (document.title.includes("Senate")) {
-        url = "https://api.propublica.org/congress/v1/113/senate/members.json";
+        url = "https://api.myjson.com/bins/1eja30";
+        // https://api.propublica.org/congress/v1/113/senate/members.json
     }
+    fetch(url)
 
-    fetch(url, {
-            headers: new Headers({
-                'X-API-Key': 'JlFF4jpgMcRs9zuQsaUDjWkjbRE3KL1b3H2cs0Kl '
-            })
-        })
+//    fetch(url, {
+//            headers: new Headers({
+//                'X-API-Key': 'JlFF4jpgMcRs9zuQsaUDjWkjbRE3KL1b3H2cs0Kl '
+//            })
+//        })
         .then(response => response.json())
         .then(realData => {
 
@@ -73,6 +76,8 @@ function calculateStatistics() {
     for (var i = 0; i < members.length; i++) {
 
         let everyMember = data.results[0].members[i];
+        
+        console.log(typeof(everyMember));
 
         switch (everyMember.party) {
             case "R":
@@ -164,15 +169,20 @@ function engaged(direction) {
         var sortedArray = members.sort(function (a, b) {
             return b.missed_votes - a.missed_votes //we sort the members based on how many votes they missed 
         });
+        
     } else {
         var sortedArray = members.sort(function (a, b) {
             return a.missed_votes - b.missed_votes
         });
     }
 
-    // take only 10% from sortedArray
+    // take only 10% from sortedArray now we know how many are 10%
     var checkedPrecent = sortedArray.length / 10;
+    
     checkedPrecent = checkedPrecent.toFixed(0);
+    
+    
+    
     // save in statistics this 10%
 
     var tenPrcArray = [];
@@ -189,6 +199,7 @@ function engaged(direction) {
         var mostTable = document.getElementById("mostTable");
         buildSmallTable(statistics.mostEngaged, mostTable);
     }
+     
 
     function buildSmallTable(smallArray, whereToPut) {
 
@@ -203,6 +214,8 @@ function engaged(direction) {
         }
     }   
 }
+    
+   
 
 function loyal(direction) {
 
