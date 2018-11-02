@@ -1,7 +1,11 @@
+//createPage();   
+
+//function createPage() {
 var app = new Vue({
 
     el: '#app',
     data: {
+        data: [],
         loading: true,
         statistics: {
             "numR": 0,
@@ -14,6 +18,7 @@ var app = new Vue({
             "mostEngaged": [],
             "bestLoyal": [],
             "worstLoyal": []
+            
 
         },
         members: [],
@@ -29,13 +34,14 @@ var app = new Vue({
         sortedArray: [],
         checkedPrecent: 0,
         tenPrcArray: [],
-       
-
+        specialArray: [],
+        numberParty: 0,
+        "numberPartyVotes": []
 
     },
 
     beforeCreate() {
-        var data;
+
         var url;
 
         if (document.title.includes("House")) {
@@ -57,27 +63,27 @@ var app = new Vue({
             .then(response => response.json())
             .then(realData => {
 
-                data = realData;
+                this.data = realData;
                 this.loading = false;
 
-                this.allMembers = data.results[0].members;
-                this.members = data.results[0].members;
+                this.allMembers = this.data.results[0].members;
+                this.members = this.data.results[0].members;
                 this.calculateStatistics();
                 this.addElements1();
                 this.addElements2();
                 this.addElements3();
                 this.addElements4();
 
+                //                    console.log(document.title.includes('Attendance'))
                 if (document.title.includes('Attendance')) {
-                    engaged("least");
-                    engaged("most");
+                    this.engaged("least");
+                    this.engaged("most");
                 }
                 if (document.title.includes('Loyalty')) {
-                    loyal("best");
-                    loyal("worst");
+                    this.loyal("best");
+                    this.loyal("worst");
                 }
-                this.loyal();
-                this.engaged();
+
 
 
 
@@ -143,97 +149,115 @@ var app = new Vue({
             this.statistics.votedWithPartyR = Math.round(this.addElements2() / this.statistics.numR);
             this.statistics.votedWithPartyD = Math.round(this.addElements3() / this.statistics.numD);
             this.totalPercentage = Math.round(this.addElements4() / this.mytotal);
-//            console.log(this.totalPercentage);
+            //            console.log(this.totalPercentage);
 
             if (this.statistics.numI == 0) {
                 this.statistics.votedWithPartyI = 0;
             } else {
                 this.statistics.votedWithPartyI = Math.round(this.addElements1() / this.statistics.numI);
-//                console.log(this.statistics.votedWithPartyI);
+                //                console.log(this.statistics.votedWithPartyI);
             }
         },
 
-        addElements1 (Inds) {
-            //    if (recievedArray.length != 0) {
+        addElements1(Inds) {
+            if (this.Inds.length != 0) {
 
-            this.sum = this.Inds.reduce((total, amount) => total + amount);
-            //    console.log(sum);
-            return this.sum;
-            
-            //    } else return 0;
+                this.sum = this.Inds.reduce((total, amount) => total + amount);
+                //    console.log(sum);
+                return this.sum;
+
+            } else return 0;
 
         },
-        
-          addElements2 (Reps) {
+
+        addElements2(Reps) {
             //    if (recievedArray.length != 0) {
 
             this.sum = this.Reps.reduce((total, amount) => total + amount);
             //    console.log(sum);
             return this.sum;
-            
+
             //    } else return 0;
 
         },
-        
-          addElements3(Dems) {
+
+        addElements3(Dems) {
             //    if (recievedArray.length != 0) {
 
             this.sum = this.Dems.reduce((total, amount) => total + amount);
             //    console.log(sum);
             return this.sum;
-            
+
             //    } else return 0;
 
         },
-        
-               addElements4(All) {
+
+        addElements4(All) {
             //    if (recievedArray.length != 0) {
 
             this.sum = this.All.reduce((total, amount) => total + amount);
             //    console.log(sum);
             return this.sum;
-            
+
             //    } else return 0;
 
         },
 
 
 
-       engaged(direction) {
+        engaged(direction) {
+            this.sortedArray = [];
+            this.tenPrcArray = [];
 
             if (direction == "least") {
-                this.sortedArray = this.members.sort(function (a, b) {
-                    return b.missed_votes - a.missed_votes //we sort the members based on how many votes they missed 
-                    console.log(this.sortedArray);
-                });
-            } else {
-                this.sortedArray = this.members.sort(function (a, b) {
-                    return a.missed_votes - b.missed_votes
-                });
+                this.sortedArray = this.members.sort((fst, snd) => snd.missed_votes_pct - fst.missed_votes_pct);
+                //we sort the members based on how many votes they missed
+            } else if (direction == "most") {
+                this.sortedArray = this.members.sort((fst, snd) => fst.missed_votes_pct - snd.missed_votes_pct);
+
             }
 
+
             // take only 10% from sortedArray now we know how many are 10%
-            this.checkedPrecent = this.sortedArray.length / 10; // returns a number 
-            this.checkedPrecent = this.checkedPrecent.toFixed(0);
+            this.checkedPrecent = (this.sortedArray.length / 10).toFixed(0); // returns a number 
             // save in statistics this 10%
 
 
-            for (i = 0; i < this.checkedPrecent; i++) {
-                this.tenPrcArray.push(this.members[i]);
-            }
+
+
+            this.sortedArray.forEach((member) => {
+                if (this.tenPrcArray.length <= (this.checkedPrecent - 1)) {
+                    this.tenPrcArray.push(member);
+                }
+                if ((member.missed_votes_pct == (member - 1).missed_votes_pct) &&
+                    this.tenPrcArray.length > (this.checkedPrecent - 1)) {
+                    this.specialArray.push(member);
+                    
+                }
+                
+            })
+            
+            console.log(this.specialArray);
+
+
 
             if (direction == "least") {
                 this.statistics.leastEngaged = this.tenPrcArray;
-
-            } else {
+                //                    console.log(this.statistics.leastEngaged);
+            } else if (direction == "most") {
                 this.statistics.mostEngaged = this.tenPrcArray;
 
             }
 
-
         },
 
         loyal(direction) {
+            
+             this.sortedArray = [];
+            this.tenPrcArray = [];
+            this.numberPartyVotes = [];
+            this.numberParty = 0;
+            
 
             if (direction == "worst") {
                 this.sortedArray = this.members.sort(function (a, b) {
@@ -246,15 +270,22 @@ var app = new Vue({
             }
 
             // take only 10% from sortedArray
-            this.checkedPrecent = this.sortedArray.length / 10;
-            this.checkedPrecent = this.checkedPrecent.toFixed(0);
+       this.checkedPrecent = (this.sortedArray.length / 10).toFixed(0); 
             // save in statistics this 10%
 
-
-            for (i = 0; i < this.checkedPrecent; i++) {
-                this.tenPrcArray.push(this.members[i]);
-            }
-
+          this.sortedArray.forEach((member) => {
+                if (this.tenPrcArray.length <= (this.checkedPrecent - 1)) {
+                    this.tenPrcArray.push(member);
+                }
+                if ((member.votes_with_party_pct == (member - 1).votes_with_party_pct) &&
+                    this.tenPrcArray.length > (this.checkedPrecent - 1)) {
+                    this.specialArray.push(member);
+                    
+                }
+              
+            })
+            
+    
             if (direction == "worst") {
                 this.statistics.worstLoyal = this.tenPrcArray;
 
@@ -262,6 +293,23 @@ var app = new Vue({
                 this.statistics.bestLoyal = this.tenPrcArray;
 
             }
+            
+               this.statistics.worstLoyal.forEach((member) => {
+                
+                this.numberParty = (member.total_votes - member.missed_votes) * (member.votes_with_party_pct /100);
+                   this.numberPartyVotes.push(this.numberParty);
+                
+            })
+            
+                    this.statistics.bestLoyal.forEach((member) => {
+                
+                this.numberParty = (member.total_votes - member.missed_votes) * (member.votes_with_party_pct /100);
+                this.numberPartyVotes.push(this.numberParty);
+            })
+            
+            console.log(this.numberPartyVotes);
+            
+            
 
 
         }
@@ -271,3 +319,4 @@ var app = new Vue({
     }
 
 })
+//}
