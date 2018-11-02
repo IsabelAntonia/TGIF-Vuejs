@@ -45,21 +45,21 @@ var app = new Vue({
         var url;
 
         if (document.title.includes("House")) {
-            url = "https://api.myjson.com/bins/j83do"
+            url = "https://api.propublica.org/congress/v1/113/house/members.json"
             //            url = "https://api.propublica.org/congress/v1/113/house/members.json";
         }
 
         if (document.title.includes("Senate")) {
-            url = "https://api.myjson.com/bins/1eja30";
+            url = "https://api.propublica.org/congress/v1/113/senate/members.json";
             //            url = "https://api.propublica.org/congress/v1/113/senate/members.json";
         }
-        fetch(url)
-            //
-            //        fetch(url, {
-            //                headers: new Headers({
-            //                    'X-API-Key': 'JlFF4jpgMcRs9zuQsaUDjWkjbRE3KL1b3H2cs0Kl '
-            //                })
-            //            })
+//        fetch(url)
+            
+                    fetch(url, {
+                            headers: new Headers({
+                                'X-API-Key': 'JlFF4jpgMcRs9zuQsaUDjWkjbRE3KL1b3H2cs0Kl '
+                            })
+                        })
             .then(response => response.json())
             .then(realData => {
 
@@ -224,17 +224,16 @@ var app = new Vue({
 
 
 
-
-            this.sortedArray.forEach((member) => {
+this.sortedArray.forEach(member => {
                 if (this.tenPrcArray.length <= (this.checkedPrecent - 1)) {
                     this.tenPrcArray.push(member);
+                } else {
+                    if (member.missed_votes_pct == (member - 1).missed_votes_pct) {
+                        this.tenPrcArray.push(member);
+                    }
+                    console.log(member)
                 }
-                if ((member.missed_votes_pct == (member - 1).missed_votes_pct) &&
-                    this.tenPrcArray.length > (this.checkedPrecent - 1)) {
-                    this.specialArray.push(member);
-                    
-                }
-                
+              
             })
             
             console.log(this.specialArray);
@@ -255,8 +254,8 @@ var app = new Vue({
             
              this.sortedArray = [];
             this.tenPrcArray = [];
-            this.numberPartyVotes = [];
-            this.numberParty = 0;
+           
+            
             
 
             if (direction == "worst") {
@@ -271,16 +270,17 @@ var app = new Vue({
 
             // take only 10% from sortedArray
        this.checkedPrecent = (this.sortedArray.length / 10).toFixed(0); 
+            console.log(this.checkedPrecent);
             // save in statistics this 10%
 
-          this.sortedArray.forEach((member) => {
+          this.sortedArray.forEach(member => {
                 if (this.tenPrcArray.length <= (this.checkedPrecent - 1)) {
                     this.tenPrcArray.push(member);
-                }
-                if ((member.votes_with_party_pct == (member - 1).votes_with_party_pct) &&
-                    this.tenPrcArray.length > (this.checkedPrecent - 1)) {
-                    this.specialArray.push(member);
-                    
+                } else {
+                    if (member.votes_with_party_pct == (member - 1).votes_with_party_pct) {
+                        this.tenPrcArray.push(member);
+                    }
+                    console.log(member)
                 }
               
             })
@@ -294,21 +294,7 @@ var app = new Vue({
 
             }
             
-               this.statistics.worstLoyal.forEach((member) => {
-                
-                this.numberParty = (member.total_votes - member.missed_votes) * (member.votes_with_party_pct /100);
-                   this.numberPartyVotes.push(this.numberParty);
-                
-            })
-            
-                    this.statistics.bestLoyal.forEach((member) => {
-                
-                this.numberParty = (member.total_votes - member.missed_votes) * (member.votes_with_party_pct /100);
-                this.numberPartyVotes.push(this.numberParty);
-            })
-            
-            console.log(this.numberPartyVotes);
-            
+              
             
 
 

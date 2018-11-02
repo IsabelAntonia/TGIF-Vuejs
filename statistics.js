@@ -263,3 +263,5 @@ function loyal(direction) {
     }
     }
     }
+
+

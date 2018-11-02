@@ -136,7 +136,7 @@
             <tbody>
                 <tr v-for="politician in statistics.worstLoyal">
                     <td><a v-bind:href="politician.url">{{politician.first_name + " " + (politician.middle_name || "")+ " " + politician.last_name}}</a></td>
-                    <td>{{numberPartyVotes}}</td>
+                    <td>{{((politician.total_votes - politician.missed_votes) * (politician.votes_with_party_pct /100)).toFixed(0)}}</td>
                     <td>{{politician.votes_with_party_pct}}%</td>
                 </tr>
             </tbody>
@@ -154,11 +154,8 @@
             <tbody>
                 <tr v-for="person in statistics.bestLoyal">
                     <td><a v-bind:href="person.url">{{person.first_name + " " + (person.middle_name || "")+ " " + person.last_name}}</a></td>
-<!--                    <td>{{numberPartyVotes}}</td>-->
+                    <td>{{((person.total_votes - person.missed_votes) * (person.votes_with_party_pct /100)).toFixed(0)}}</td>
                     <td>{{person.votes_with_party_pct}}%</td>
-                </tr>
-                      <tr v-for="item in numberPartyVotes">
-                    <td>{{item}}</td>
                 </tr>
             </tbody>
         </table>
