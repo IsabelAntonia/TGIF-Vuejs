@@ -36,7 +36,9 @@ var app = new Vue({
         tenPrcArray: [],
         specialArray: [],
         numberParty: 0,
-        "numberPartyVotes": []
+        "numberPartyVotes": [],
+        specialArray: [],
+        myArray: []
 
     },
 
@@ -46,12 +48,12 @@ var app = new Vue({
 
         if (document.title.includes("House")) {
             url = "https://api.propublica.org/congress/v1/113/house/members.json"
-            //            url = "https://api.propublica.org/congress/v1/113/house/members.json";
+//                        url = "https://api.propublica.org/congress/v1/113/house/members.json";
         }
 
         if (document.title.includes("Senate")) {
             url = "https://api.propublica.org/congress/v1/113/senate/members.json";
-            //            url = "https://api.propublica.org/congress/v1/113/senate/members.json";
+//                        url = "https://api.propublica.org/congress/v1/113/senate/members.json";
         }
 //        fetch(url)
             
@@ -208,6 +210,8 @@ var app = new Vue({
         engaged(direction) {
             this.sortedArray = [];
             this.tenPrcArray = [];
+            this.specialArray = [];
+            this.myArray = [];
 
             if (direction == "least") {
                 this.sortedArray = this.members.sort((fst, snd) => snd.missed_votes_pct - fst.missed_votes_pct);
@@ -223,32 +227,111 @@ var app = new Vue({
             // save in statistics this 10%
 
 
-
-this.sortedArray.forEach(member => {
-                if (this.tenPrcArray.length <= (this.checkedPrecent - 1)) {
-                    this.tenPrcArray.push(member);
-                } else {
-                    if (member.missed_votes_pct == (member - 1).missed_votes_pct) {
-                        this.tenPrcArray.push(member);
-                    }
-                    console.log(member)
+console.log(this.sortedArray);
+            
+            
+            
+//this.sortedArray.forEach(member => {
+//                if (this.tenPrcArray.length <= (this.checkedPrecent - 1)) {
+//                    this.tenPrcArray.push(member);
+//                } else {
+//              
+//                   this.specialArray.push(member);
+//                }
+//              
+//            })
+            
+            console.log(this.checkedPrecent);
+            
+            
+            this.sortedArray.forEach(member => {
+                if (this.tenPrcArray.length < (this.checkedPrecent - 1)) {
+                    this.tenPrcArray.push(member); //44
+//                    console.log(this.tenPrcArray);
+                    
+                } 
+                else if (this.tenPrcArray.length == (this.checkedPrecent - 1)){ 
+                    this.myArray.push(member);
+                    this.tenPrcArray.push(member); //45
+                    
+                }
+                
+                else {
+              
+                   this.specialArray.push(member); // 405
                 }
               
             })
             
-            console.log(this.specialArray);
+      
+            
+            console.log(this.tenPrcArray); //45
+            console.log(this.myArray); //1
+            console.log(this.specialArray); //
+            
+            
+            
+            
+//            console.log(this.specialArray);
+            
+            
+//            for (k = 0; k < this.specialArray.length; k++ ){
+//                for (m = 0; m < this.specialArray.length; m++){
+//                    if (k != m) { 
+//                    if (this.members[k].missed_votes_pct == this.members[m].missed_votes_pct){ //not sure about the syntax
+//                        if (!this.tenPrcArray.includes(members[k])) {// only if this.tenPrcArray doesn´t include the member already 
+//                        this.tenPrc.push(this.members[k])} // not sure about the syntax
+//                        else {console.log("unneccessay")}
+//                    }
+//                    
+//                    else {console.log("not a match")}
+//                }
+//                 else {console.log("k = m")}
+//                
+//                }
+//            }
+            
+            
+this.specialArray.forEach(item => {
+    
+    this.myArray.forEach(thing => {
+        if (thing != item){
+            if (item.missed_votes_pct == thing.missed_votes_pct){
+                if (!this.tenPrcArray.includes(item)){
+                    this.tenPrcArray.push(item)
+                }
+                
+            }
+            
+        }
+        
+        
+    })
+})
+            
+            
+
+            
+            console.log(this.tenPrcArray);
 
 
 
             if (direction == "least") {
                 this.statistics.leastEngaged = this.tenPrcArray;
-                //                    console.log(this.statistics.leastEngaged);
+                                    console.log(this.statistics.leastEngaged);
             } else if (direction == "most") {
                 this.statistics.mostEngaged = this.tenPrcArray;
 
             }
 
         },
+        
+        
+        
+        
+        
+        
+        
 
         loyal(direction) {
             
@@ -268,15 +351,18 @@ this.sortedArray.forEach(member => {
                 });
             }
 
-            // take only 10% from sortedArray
+            // what is 10%?
        this.checkedPrecent = (this.sortedArray.length / 10).toFixed(0); 
-            console.log(this.checkedPrecent);
-            // save in statistics this 10%
+//            console.log(this.checkedPrecent);
+            
+            
+            
+            //remove this number from the sortedArray and put it in the array tenPrcArray
 
           this.sortedArray.forEach(member => {
-                if (this.tenPrcArray.length <= (this.checkedPrecent - 1)) {
+                if (this.tenPrcArray.length <= (this.checkedPrecent - 1)) { // as long as the length of tenPrcArray is lower than our number  
                     this.tenPrcArray.push(member);
-                } else {
+                } else { //if it is longer 
                     if (member.votes_with_party_pct == (member - 1).votes_with_party_pct) {
                         this.tenPrcArray.push(member);
                     }
