@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Senate data</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="mystyle.css">
+    <link rel="stylesheet" href="styles/mystyle.css">
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 </head>
@@ -17,10 +17,10 @@
         <header>
             <div class="row align-items-center">
                 <div class="col-9">
-                    <img class="img-fluid" src="Logo.png" alt="logo">
+                    <img class="img-fluid" src="assets/Logo.png" alt="logo">
                 </div>
                 <div class="col-1">
-                    <img class="img-fluid" src="email-logo-png-transparent-background-5.png" alt="logo">
+                    <img class="img-fluid" src="assets/email-logo-png-transparent-background-5.png" alt="logo">
                 </div>
                 <div class="col-2">
                     <h4><a href="mailto:info@tgif.net" target="_blank">info@tgif.net</a></h4>
@@ -28,12 +28,12 @@
 
             </div>
         </header>
-        
+
         <nav class="navMargin">
 
             <ul class=" row nav nav-tabs border border border-dark bg-light">
                 <li class="nav-item border border-dark">
-                    <a class="nav-link active" href="home.html">Home</a>
+                    <a class="nav-link active" href="index.html">Home</a>
                 </li>
                 <li class="nav-item dropdown border border-dark">
                     <a class="nav-link dropdown-toggle border" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Congress 113</a>
@@ -61,16 +61,13 @@
 
         </nav>
 
-
-
-
         <!--Table container-->
         <h2>Senators</h2>
         <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
-      
+
         <div id="vueTest">
-        
-         <div v-if="loading" class="loader" style="text-align:center">
+
+            <div v-if="loading" class="loader" style="text-align:center">
                 <div class="lds-default">
                     <div></div>
                     <div></div>
@@ -89,71 +86,49 @@
             </div>
 
             <div v-else>
-        
-        Filter by party: 
-        <input type="checkbox" name="party" value="R" id="partyR" @click="filter">Republican
-        <input type="checkbox" name="party" value="D" id="partyD" @click="filter">Democrat
-        <input type="checkbox" name="party" value="I" id="partyI" @click="filter">Independant 
-          
-        Filter by State: <select name="state" id="stateId" @change="filter">
+
+                Filter by party:
+                <input type="checkbox" name="party" value="R" id="partyR" @click="filter">Republican
+                <input type="checkbox" name="party" value="D" id="partyD" @click="filter">Democrat
+                <input type="checkbox" name="party" value="I" id="partyI" @click="filter">Independant Filter by State: <select name="state" id="stateId" @change="filter">
             <option value="ALL">ALL</option>
             <option v-for="item in sortedStates">{{item}}</option>
            
             
             
         </select>
-        
-        <div class="table-responsive">
-            <table class="table table-borderless">
-                <thead class="thead-dark">
-                    <tr>
 
-                        <th>Name</th>
-                        <th>Party Affiliation</th>
-                        <th>State</th>
-                        <th>Seniority</th>
-                        <th>Percentage of votes</th>
-                    </tr>
-                </thead>
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead class="thead-dark">
+                            <tr>
 
-                <tbody>
-                    <tr v-for="member in members">
-                        <td><a v-bind:href="member.url">{{member.first_name + " " + (member.middle_name || "")+ " " + member.last_name}}</a></td>
-                        <td>{{member.party}}</td>
-                        <td>{{member.state}}</td>
-                        <td>{{member.seniority}}</td>
-                        <td>{{member.votes_with_party_pct}}%</td>
-                    </tr>
-                </tbody>
+                                <th>Name</th>
+                                <th>Party Affiliation</th>
+                                <th>State</th>
+                                <th>Seniority</th>
+                                <th>Percentage of votes</th>
+                            </tr>
+                        </thead>
 
-            </table>
+                        <tbody>
+                            <tr v-for="member in members">
+                                <td><a v-bind:href="member.url">{{member.first_name + " " + (member.middle_name || "")+ " " + member.last_name}}</a></td>
+                                <td>{{member.party}}</td>
+                                <td>{{member.state}}</td>
+                                <td>{{member.seniority}}</td>
+                                <td>{{member.votes_with_party_pct}}%</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+
+            </div>
         </div>
 
 
-        </div>
-         </div>
-
-
-
-        
-<!--
-     
-        <div class="table-responsive">
-            <table class="table table-borderless">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Senator</th>
-                            <th>Party Affiliation</th>
-                            <th>State</th>
-                            <th>Seniority</th>
-                            <th>Percentage of votes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="putDataHere">
-                    </tbody>
-            </table>
-        </div>
--->
 
         <footer>
             <div class="border border-dark bg-light row justify-content-center">
@@ -161,10 +136,9 @@
             </div>
         </footer>
 
-<!--        <script src="congress-113-senate.js"></script>-->
-<!--       <script src="test.js"></script>-->
-        <script src="get-data.js"></script>
-<!--        <script src="myVueTest.js"></script>-->
+
+        <script src="scripts/vuejs_bigtables.js"></script>
+
 
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
