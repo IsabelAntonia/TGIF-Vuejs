@@ -12,59 +12,15 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
 
-        <header>
-            <div class="row align-items-center">
-                <div class="col-9">
-                    <img class="img-fluid" src="assets/Logo.png" alt="logo">
-                </div>
-                <div class="col-1">
-                    <img class="img-fluid" src="assets/email-logo-png-transparent-background-5.png" alt="logo">
-                </div>
-                <div class="col-2">
-                    <h4><a href="mailto:info@tgif.net" target="_blank">info@tgif.net</a></h4>
-                </div>
-
-            </div>
-        </header>
-
-        <nav class="navMargin">
-
-            <ul class=" row nav nav-tabs border border border-dark bg-light">
-                <li class="nav-item border border-dark">
-                    <a class="nav-link active" href="index.html">Home</a>
-                </li>
-                <li class="nav-item dropdown border border-dark">
-                    <a class="nav-link dropdown-toggle border" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Congress 113</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="senate-data.html">Senate</a>
-                        <a class="dropdown-item" href="house-data.html">House</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown border border-dark">
-                    <a class="nav-link dropdown-toggle border" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Attendance</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="senate-attendance.html">Senate</a>
-                        <a class="dropdown-item" href="house-attendance.html">House</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown border border-dark">
-                    <a class="nav-link dropdown-toggle border" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Party Loyalty</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="senate-loyalty.html">Senate</a>
-                        <a class="dropdown-item" href="house-loyalty.html">House</a>
-                    </div>
-                </li>
-            </ul>
-
-
-        </nav>
+        <div id="component-header">
+            <my-header></my-header>
+        </div>
 
 
 
 
-        <!--Table container-->
         <h2>Party Loyalty</h2>
         <p>Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
 
@@ -162,25 +118,22 @@
             </div>
         </div>
 
-        <footer>
-            <div class="border border-dark bg-light row justify-content-center">
-                <b>© 2016 TGIF / All Rights Reserved</b>
-            </div>
-        </footer>
-
-        <!--        <script src="congress-113-senate.js"></script>-->
-        <!--       <script src="test.js"></script>-->
-        <script src="scripts/vuejs_statistics.js"></script>
-        <!--        <script src="myVueTest.js"></script>-->
-
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-
-
     </div>
+    <div id="component-footer">
+        <my-footer></my-footer>
+    </div>
+
+
+    <script src="scripts/vuejs_statistics.js"></script>
+    <script src="scripts/component-header.js"></script>
+    <script src="scripts/component-footer.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
 
 </body>
 
