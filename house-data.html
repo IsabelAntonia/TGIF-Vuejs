@@ -71,7 +71,8 @@
                     </div>
 
                     Filter by State: <select name="state" id="stateId" @change="filter">
-        <option value = "ALL">ALL</option><option v-for = "item in sortedStates"> 
+        <option value = "ALL">ALL</option>
+        <option v-for = "item in sortedStates"> 
 {{item}}
     </option>
 
