@@ -131,6 +131,11 @@ display:none;
     display: block !important;
 }
 
+
+p {
+    text-align: justify;
+}
+
 .checkBoxArea {
     
     font-size: 15px;

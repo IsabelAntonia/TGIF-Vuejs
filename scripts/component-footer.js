@@ -1,9 +1,5 @@
  
 
-// header component
-// checkbox component 
-// footer component 
-
 
 
     Vue.component("my-footer", {
