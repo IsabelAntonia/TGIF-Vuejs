@@ -11,7 +11,6 @@ new Vue({
     beforeCreate() {   
         var data;
         var url;
-        var key = config.key
 
         if (document.title.includes("House")) {
             url = "https://api.propublica.org/congress/v1/113/house/members.json";
@@ -23,7 +22,7 @@ new Vue({
 
         fetch(url, {
                 headers: new Headers({
-                    'X-API-Key': key
+                    'X-API-Key': 'JlFF4jpgMcRs9zuQsaUDjWkjbRE3KL1b3H2cs0Kl'
                 })
             })
             .then(response => response.json())

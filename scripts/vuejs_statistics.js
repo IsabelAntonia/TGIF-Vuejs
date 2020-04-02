@@ -33,23 +33,19 @@ var app = new Vue({
 
     beforeCreate() {
 
-        var key = config.key
         var url;
 
         if (document.title.includes("House")) {
             url = "https://api.propublica.org/congress/v1/113/house/members.json"
-            //                        url = "https://api.propublica.org/congress/v1/113/house/members.json";
         }
 
         if (document.title.includes("Senate")) {
             url = "https://api.propublica.org/congress/v1/113/senate/members.json";
-            //                        url = "https://api.propublica.org/congress/v1/113/senate/members.json";
         }
-        //        fetch(url)
 
         fetch(url, {
                 headers: new Headers({
-                    'X-API-Key': key
+                    'X-API-Key': 'JlFF4jpgMcRs9zuQsaUDjWkjbRE3KL1b3H2cs0Kl'
                 })
             })
             .then(response => response.json())
